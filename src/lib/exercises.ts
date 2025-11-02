@@ -61,10 +61,10 @@ export const predefinedExercises: Exercise[] = [
       "https://www.puregym.com/media/5jqls0nn/close-grip-lat-pulldown.jpg?quality=80",
   },
   {
-    name: "Double Rope",
+    name: "Overhead Rope Extension",
     category: "Triceps",
     imageUrl:
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&h=400&fit=crop&q=80",
+      "https://cdn.muscleandstrength.com/sites/default/files/overhead-rope-tricep-extension.jpg",
   },
   {
     name: "Chest Supported Dumbbell Row",
@@ -94,13 +94,13 @@ export const predefinedExercises: Exercise[] = [
     name: "Tricep Dips",
     category: "Triceps",
     imageUrl:
-      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
+      "https://hips.hearstapps.com/hmg-prod/images/gym-bench-and-man-with-dips-workout-for-body-royalty-free-image-1720005714.jpg?resize=980:*",
   },
   {
     name: "Skull Crushers",
     category: "Triceps",
     imageUrl:
-      "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&h=400&fit=crop&q=80",
+      "https://cdn.muscleandstrength.com/sites/default/files/ez-bar-skullcrusher_0.jpg",
   },
   {
     name: "Lateral Raises",
@@ -118,30 +118,24 @@ export const predefinedExercises: Exercise[] = [
     name: "Squats",
     category: "Legs",
     imageUrl:
-      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=400&fit=crop&q=80",
+      "https://cdn.muscleandstrength.com/sites/default/files/squat-variations-feature.jpg",
   },
   {
     name: "Leg Press",
     category: "Legs",
     imageUrl:
-      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2018/04/1109-machine-leg-press.jpg?quality=86&strip=all",
   },
   {
     name: "Leg Curl",
     category: "Legs",
     imageUrl:
-      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2015/02/big-wheels-rate-my-workout-promo.jpg?quality=86&strip=all",
   },
   {
     name: "Leg Extension",
     category: "Legs",
     imageUrl:
-      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
-  },
-  {
-    name: "Calf Raises",
-    category: "Legs",
-    imageUrl:
-      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=400&fit=crop&q=80",
+      "https://cdn.muscleandstrength.com/sites/default/files/leg-extension.jpg",
   },
 ];
