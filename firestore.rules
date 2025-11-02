@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to get authenticated user's email
+    function getUserEmail() {
+      return request.auth.token.email;
+    }
+    
+    // Exercise Logs Collection
+    // Structure: exerciseLogs/{userEmail}/logs/{logId}
+    match /exerciseLogs/{userEmail} {
+      // Allow users to read/write their own user document
+      // Document ID must match the authenticated user's email
+      allow read, write: if isAuthenticated() && 
+                            userEmail == getUserEmail();
+      
+      // Logs subcollection - individual exercise log entries
+      match /logs/{logId} {
+        // Allow users to read/write their own logs
+        // Ensure the userEmail field in the document matches authenticated user
+        allow read: if isAuthenticated() && 
+                       userEmail == getUserEmail();
+        
+        allow create: if isAuthenticated() && 
+                         userEmail == getUserEmail() &&
+                         request.resource.data.userEmail == getUserEmail();
+        
+        allow update, delete: if isAuthenticated() && 
+                                userEmail == getUserEmail() &&
+                                resource.data.userEmail == getUserEmail();
+      }
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
