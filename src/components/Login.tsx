@@ -1,11 +1,10 @@
-import { Dumbbell, ShieldCheck } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
 
 interface LoginProps {
   onSignIn: () => void;
-  onAdminSignIn: () => void;
 }
 
-export function Login({ onSignIn, onAdminSignIn }: LoginProps) {
+export function Login({ onSignIn }: LoginProps) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-black p-4">
       <div className="w-full max-w-md">
@@ -41,14 +40,6 @@ export function Login({ onSignIn, onAdminSignIn }: LoginProps) {
               />
             </svg>
             Continue with Google
-          </button>
-
-          <button
-            onClick={onAdminSignIn}
-            className="w-full mt-3 bg-gray-900/50 hover:bg-gray-900 text-green-600 hover:text-green-400 font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-3 border border-green-900/50 hover:border-green-800/50"
-          >
-            <ShieldCheck className="w-5 h-5" />
-            Login as Admin (Dev)
           </button>
 
           <div className="mt-8 pt-6 border-t border-green-900/30">

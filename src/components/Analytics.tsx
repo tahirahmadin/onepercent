@@ -1,48 +1,67 @@
-import { useMemo, useState } from 'react';
-import { TrendingUp, TrendingDown, Minus, Calendar, Dumbbell, Target } from 'lucide-react';
-import { useExerciseLogs } from '../hooks/useExerciseLogs';
-import { ExerciseCategory } from '../types/exercise';
+import { useMemo, useState } from "react";
+import {
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Calendar,
+  Dumbbell,
+  Target,
+} from "lucide-react";
+import { useExerciseLogs } from "../hooks/useExerciseLogs";
+import { ExerciseCategory } from "../types/exercise";
 
 interface AnalyticsProps {
   userEmail: string | null;
 }
 
-const categories: ExerciseCategory[] = ['Chest', 'Back', 'Shoulder', 'Core', 'Triceps', 'Legs'];
+const categories: ExerciseCategory[] = [
+  "Chest",
+  "Back",
+  "Shoulder",
+  "Core",
+  "Triceps",
+  "Legs",
+];
 
 const categoryColors: Record<ExerciseCategory, string> = {
-  Chest: 'bg-green-700',
-  Back: 'bg-green-600',
-  Shoulder: 'bg-green-800',
-  Core: 'bg-green-600',
-  Triceps: 'bg-green-700',
-  Legs: 'bg-green-800',
+  Chest: "bg-green-700",
+  Back: "bg-green-600",
+  Shoulder: "bg-green-800",
+  Core: "bg-green-600",
+  Triceps: "bg-green-700",
+  Legs: "bg-green-800",
 };
 
 const categoryBorderColors: Record<ExerciseCategory, string> = {
-  Chest: 'border-green-700',
-  Back: 'border-green-600',
-  Shoulder: 'border-green-800',
-  Core: 'border-green-600',
-  Triceps: 'border-green-700',
-  Legs: 'border-green-800',
+  Chest: "border-green-700",
+  Back: "border-green-600",
+  Shoulder: "border-green-800",
+  Core: "border-green-600",
+  Triceps: "border-green-700",
+  Legs: "border-green-800",
 };
 
 export function Analytics({ userEmail }: AnalyticsProps) {
   const { logs, loading } = useExerciseLogs(userEmail);
-  const [selectedCategory, setSelectedCategory] = useState<ExerciseCategory | 'All'>('All');
+  const [selectedCategory, setSelectedCategory] = useState<
+    ExerciseCategory | "All"
+  >("All");
 
   const analytics = useMemo(() => {
-    const exerciseStats = new Map<string, {
-      name: string;
-      category: ExerciseCategory;
-      logs: typeof logs;
-      maxWeight: number;
-      avgWeight: number;
-      totalSets: number;
-      lastLog: typeof logs[0];
-      trend: 'up' | 'down' | 'stable';
-      trendPercentage: number;
-    }>();
+    const exerciseStats = new Map<
+      string,
+      {
+        name: string;
+        category: ExerciseCategory;
+        logs: typeof logs;
+        maxWeight: number;
+        avgWeight: number;
+        totalSets: number;
+        lastLog: (typeof logs)[0];
+        trend: "up" | "down" | "stable";
+        trendPercentage: number;
+      }
+    >();
 
     logs.forEach((log) => {
       const existing = exerciseStats.get(log.exerciseName);
@@ -62,7 +81,7 @@ export function Analytics({ userEmail }: AnalyticsProps) {
           avgWeight: log.weight,
           totalSets: log.sets || 1,
           lastLog: log,
-          trend: 'stable',
+          trend: "stable",
           trendPercentage: 0,
         });
       }
@@ -72,29 +91,37 @@ export function Analytics({ userEmail }: AnalyticsProps) {
       const totalWeight = stats.logs.reduce((sum, log) => sum + log.weight, 0);
       stats.avgWeight = totalWeight / stats.logs.length;
 
-      const sortedLogs = [...stats.logs].sort((a, b) => a.date.getTime() - b.date.getTime());
+      const sortedLogs = [...stats.logs].sort(
+        (a, b) => a.date.getTime() - b.date.getTime()
+      );
       if (sortedLogs.length >= 2) {
         const firstWeight = sortedLogs[0].weight;
         const lastWeight = sortedLogs[sortedLogs.length - 1].weight;
-        const percentageChange = ((lastWeight - firstWeight) / firstWeight) * 100;
+        const percentageChange =
+          ((lastWeight - firstWeight) / firstWeight) * 100;
 
         stats.trendPercentage = Math.abs(percentageChange);
 
         if (percentageChange > 5) {
-          stats.trend = 'up';
+          stats.trend = "up";
         } else if (percentageChange < -5) {
-          stats.trend = 'down';
+          stats.trend = "down";
         } else {
-          stats.trend = 'stable';
+          stats.trend = "stable";
         }
       }
     });
 
-    return Array.from(exerciseStats.values()).sort((a, b) => b.logs.length - a.logs.length);
+    return Array.from(exerciseStats.values()).sort(
+      (a, b) => b.logs.length - a.logs.length
+    );
   }, [logs]);
 
   const overallWeightByDate = useMemo(() => {
-    const dateMap = new Map<string, { totalWeight: number; count: number; date: Date }>();
+    const dateMap = new Map<
+      string,
+      { totalWeight: number; count: number; date: Date }
+    >();
 
     logs.forEach((log) => {
       const dateKey = log.date.toLocaleDateString();
@@ -123,8 +150,8 @@ export function Analytics({ userEmail }: AnalyticsProps) {
   }, [logs]);
 
   const filteredAnalytics = useMemo(() => {
-    if (selectedCategory === 'All') return analytics;
-    return analytics.filter(ex => ex.category === selectedCategory);
+    if (selectedCategory === "All") return analytics;
+    return analytics.filter((ex) => ex.category === selectedCategory);
   }, [analytics, selectedCategory]);
 
   const categoryStats = useMemo(() => {
@@ -138,13 +165,15 @@ export function Analytics({ userEmail }: AnalyticsProps) {
   const recentProgress = useMemo(() => {
     const last30Days = new Date();
     last30Days.setDate(last30Days.getDate() - 30);
-    return logs.filter(log => log.date >= last30Days).length;
+    return logs.filter((log) => log.date >= last30Days).length;
   }, [logs]);
 
   const progressPercentage = useMemo(() => {
     if (logs.length === 0) return 0;
 
-    const sortedLogs = [...logs].sort((a, b) => a.date.getTime() - b.date.getTime());
+    const sortedLogs = [...logs].sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    );
 
     const firstHalfEnd = Math.floor(sortedLogs.length / 2);
     const firstHalf = sortedLogs.slice(0, firstHalfEnd);
@@ -152,8 +181,10 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
     if (firstHalf.length === 0 || secondHalf.length === 0) return 0;
 
-    const avgFirstHalf = firstHalf.reduce((sum, log) => sum + log.weight, 0) / firstHalf.length;
-    const avgSecondHalf = secondHalf.reduce((sum, log) => sum + log.weight, 0) / secondHalf.length;
+    const avgFirstHalf =
+      firstHalf.reduce((sum, log) => sum + log.weight, 0) / firstHalf.length;
+    const avgSecondHalf =
+      secondHalf.reduce((sum, log) => sum + log.weight, 0) / secondHalf.length;
 
     return ((avgSecondHalf - avgFirstHalf) / avgFirstHalf) * 100;
   }, [logs]);
@@ -174,14 +205,20 @@ export function Analytics({ userEmail }: AnalyticsProps) {
       <div className="flex items-center justify-center h-full p-4">
         <div className="text-center">
           <Dumbbell className="w-16 h-16 text-green-900 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-green-400 mb-2">No Data Yet</h3>
-          <p className="text-green-700">Start logging exercises to see your analytics</p>
+          <h3 className="text-xl font-semibold text-green-400 mb-2">
+            No Data Yet
+          </h3>
+          <p className="text-green-700">
+            Start logging exercises to see your analytics
+          </p>
         </div>
       </div>
     );
   }
 
-  const maxOverallWeight = Math.max(...overallWeightByDate.map(d => d.avgWeight));
+  const maxOverallWeight = Math.max(
+    ...overallWeightByDate.map((d) => d.avgWeight)
+  );
 
   return (
     <div className="h-full overflow-y-auto">
@@ -192,7 +229,9 @@ export function Analytics({ userEmail }: AnalyticsProps) {
               <Dumbbell className="w-5 h-5 text-green-500" />
               <span className="text-sm text-green-400">Last 30 Days</span>
             </div>
-            <div className="text-3xl font-bold text-green-400">{recentProgress}</div>
+            <div className="text-3xl font-bold text-green-400">
+              {recentProgress}
+            </div>
             <div className="text-xs text-green-700 mt-1">total exercises</div>
           </div>
 
@@ -205,10 +244,13 @@ export function Analytics({ userEmail }: AnalyticsProps) {
               )}
               <span className="text-sm text-green-400">Progress</span>
             </div>
-            <div className={`text-3xl font-bold ${
-              progressPercentage >= 0 ? 'text-green-400' : 'text-red-400'
-            }`}>
-              {progressPercentage >= 0 ? '+' : ''}{progressPercentage.toFixed(1)}%
+            <div
+              className={`text-3xl font-bold ${
+                progressPercentage >= 0 ? "text-green-400" : "text-red-400"
+              }`}
+            >
+              {progressPercentage >= 0 ? "+" : ""}
+              {progressPercentage.toFixed(1)}%
             </div>
             <div className="text-xs text-green-700 mt-1">avg weight change</div>
           </div>
@@ -217,13 +259,38 @@ export function Analytics({ userEmail }: AnalyticsProps) {
         <div className="bg-gray-950/80 backdrop-blur-xl rounded-2xl p-5 border border-green-900/30">
           <h3 className="text-lg font-bold text-green-400 mb-4 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-green-500" />
-            Overall Weight Progress (Avg per Day)
+            Weight Progress
           </h3>
           <div className="relative h-48 bg-black rounded-lg p-4 pl-12">
-            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <line x1="0" y1="25" x2="100" y2="25" stroke="#0a3d0a" strokeWidth="0.3" />
-              <line x1="0" y1="50" x2="100" y2="50" stroke="#0a3d0a" strokeWidth="0.3" />
-              <line x1="0" y1="75" x2="100" y2="75" stroke="#0a3d0a" strokeWidth="0.3" />
+            <svg
+              className="w-full h-full"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              <line
+                x1="0"
+                y1="25"
+                x2="100"
+                y2="25"
+                stroke="#0a3d0a"
+                strokeWidth="0.3"
+              />
+              <line
+                x1="0"
+                y1="50"
+                x2="100"
+                y2="50"
+                stroke="#0a3d0a"
+                strokeWidth="0.3"
+              />
+              <line
+                x1="0"
+                y1="75"
+                x2="100"
+                y2="75"
+                stroke="#0a3d0a"
+                strokeWidth="0.3"
+              />
 
               <polyline
                 fill="none"
@@ -232,23 +299,18 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                 points={overallWeightByDate
                   .map((data, idx, arr) => {
                     const x = (idx / (arr.length - 1 || 1)) * 100;
-                    const y = 100 - ((data.avgWeight / maxOverallWeight) * 80 + 10);
+                    const y =
+                      100 - ((data.avgWeight / maxOverallWeight) * 80 + 10);
                     return `${x},${y}`;
                   })
-                  .join(' ')}
+                  .join(" ")}
               />
 
               {overallWeightByDate.map((data, idx, arr) => {
                 const x = (idx / (arr.length - 1 || 1)) * 100;
                 const y = 100 - ((data.avgWeight / maxOverallWeight) * 80 + 10);
                 return (
-                  <circle
-                    key={idx}
-                    cx={x}
-                    cy={y}
-                    r="1.5"
-                    fill="#22c55e"
-                  />
+                  <circle key={idx} cx={x} cy={y} r="1.5" fill="#22c55e" />
                 );
               })}
             </svg>
@@ -269,11 +331,11 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
           <div className="flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide">
             <button
-              onClick={() => setSelectedCategory('All')}
+              onClick={() => setSelectedCategory("All")}
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
-                selectedCategory === 'All'
-                  ? 'bg-green-600 text-black shadow-lg'
-                  : 'bg-gray-900/50 text-green-600'
+                selectedCategory === "All"
+                  ? "bg-green-600 text-black shadow-lg"
+                  : "bg-gray-900/50 text-green-600"
               }`}
             >
               All
@@ -284,8 +346,8 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
                   selectedCategory === cat
-                    ? 'bg-green-600 text-black shadow-lg'
-                    : 'bg-gray-900/50 text-green-600'
+                    ? "bg-green-600 text-black shadow-lg"
+                    : "bg-gray-900/50 text-green-600"
                 }`}
               >
                 {cat}
@@ -295,7 +357,9 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
           <div className="space-y-4">
             {filteredAnalytics.map((exercise) => {
-              const sortedLogs = [...exercise.logs].sort((a, b) => a.date.getTime() - b.date.getTime());
+              const sortedLogs = [...exercise.logs].sort(
+                (a, b) => a.date.getTime() - b.date.getTime()
+              );
               return (
                 <div
                   key={exercise.name}
@@ -303,44 +367,83 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <h4 className="text-green-400 font-semibold">{exercise.name}</h4>
-                      <span className={`inline-block text-xs px-2 py-1 rounded-md mt-1 ${categoryColors[exercise.category]} text-black`}>
+                      <h4 className="text-green-400 font-semibold">
+                        {exercise.name}
+                      </h4>
+                      <span
+                        className={`inline-block text-xs px-2 py-1 rounded-md mt-1 ${
+                          categoryColors[exercise.category]
+                        } text-black`}
+                      >
                         {exercise.category}
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
-                        {exercise.trend === 'up' && (
+                        {exercise.trend === "up" && (
                           <div className="flex items-center gap-1 bg-green-900/40 px-2 py-1 rounded-lg">
                             <TrendingUp className="w-4 h-4 text-green-500" />
-                            <span className="text-xs text-green-500 font-semibold">+{exercise.trendPercentage.toFixed(0)}%</span>
+                            <span className="text-xs text-green-500 font-semibold">
+                              +{exercise.trendPercentage.toFixed(0)}%
+                            </span>
                           </div>
                         )}
-                        {exercise.trend === 'down' && (
+                        {exercise.trend === "down" && (
                           <div className="flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded-lg">
                             <TrendingDown className="w-4 h-4 text-red-400" />
-                            <span className="text-xs text-red-400 font-semibold">-{exercise.trendPercentage.toFixed(0)}%</span>
+                            <span className="text-xs text-red-400 font-semibold">
+                              -{exercise.trendPercentage.toFixed(0)}%
+                            </span>
                           </div>
                         )}
-                        {exercise.trend === 'stable' && (
+                        {exercise.trend === "stable" && (
                           <div className="flex items-center gap-1 bg-gray-900/40 px-2 py-1 rounded-lg">
                             <Minus className="w-4 h-4 text-green-700" />
-                            <span className="text-xs text-green-700 font-semibold">Stable</span>
+                            <span className="text-xs text-green-700 font-semibold">
+                              Stable
+                            </span>
                           </div>
                         )}
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-green-500">{exercise.maxWeight}kg</div>
+                        <div className="text-2xl font-bold text-green-500">
+                          {exercise.maxWeight}kg
+                        </div>
                         <div className="text-xs text-green-800">max weight</div>
                       </div>
                     </div>
                   </div>
 
                   <div className="relative h-32 bg-gray-950 rounded-lg p-4 pl-12">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <line x1="0" y1="25" x2="100" y2="25" stroke="#0a3d0a" strokeWidth="0.3" />
-                      <line x1="0" y1="50" x2="100" y2="50" stroke="#0a3d0a" strokeWidth="0.3" />
-                      <line x1="0" y1="75" x2="100" y2="75" stroke="#0a3d0a" strokeWidth="0.3" />
+                    <svg
+                      className="w-full h-full"
+                      viewBox="0 0 100 100"
+                      preserveAspectRatio="none"
+                    >
+                      <line
+                        x1="0"
+                        y1="25"
+                        x2="100"
+                        y2="25"
+                        stroke="#0a3d0a"
+                        strokeWidth="0.3"
+                      />
+                      <line
+                        x1="0"
+                        y1="50"
+                        x2="100"
+                        y2="50"
+                        stroke="#0a3d0a"
+                        strokeWidth="0.3"
+                      />
+                      <line
+                        x1="0"
+                        y1="75"
+                        x2="100"
+                        y2="75"
+                        stroke="#0a3d0a"
+                        strokeWidth="0.3"
+                      />
 
                       <polyline
                         fill="none"
@@ -349,15 +452,18 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                         points={sortedLogs
                           .map((log, idx, arr) => {
                             const x = (idx / (arr.length - 1 || 1)) * 100;
-                            const y = 100 - ((log.weight / exercise.maxWeight) * 80 + 10);
+                            const y =
+                              100 -
+                              ((log.weight / exercise.maxWeight) * 80 + 10);
                             return `${x},${y}`;
                           })
-                          .join(' ')}
+                          .join(" ")}
                       />
 
                       {sortedLogs.map((log, idx, arr) => {
                         const x = (idx / (arr.length - 1 || 1)) * 100;
-                        const y = 100 - ((log.weight / exercise.maxWeight) * 80 + 10);
+                        const y =
+                          100 - ((log.weight / exercise.maxWeight) * 80 + 10);
                         return (
                           <circle
                             key={idx}
@@ -379,16 +485,28 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
                   <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-green-900/30">
                     <div className="text-center">
-                      <div className="text-green-700 text-xs mb-1">Avg Weight</div>
-                      <div className="text-green-400 font-semibold">{exercise.avgWeight.toFixed(1)}kg</div>
+                      <div className="text-green-700 text-xs mb-1">
+                        Avg Weight
+                      </div>
+                      <div className="text-green-400 font-semibold">
+                        {exercise.avgWeight.toFixed(1)}kg
+                      </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-green-700 text-xs mb-1">Total Logs</div>
-                      <div className="text-green-400 font-semibold">{exercise.logs.length}</div>
+                      <div className="text-green-700 text-xs mb-1">
+                        Total Logs
+                      </div>
+                      <div className="text-green-400 font-semibold">
+                        {exercise.logs.length}
+                      </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-green-700 text-xs mb-1">Last Logged</div>
-                      <div className="text-green-400 font-semibold text-xs">{exercise.lastLog.date.toLocaleDateString()}</div>
+                      <div className="text-green-700 text-xs mb-1">
+                        Last Logged
+                      </div>
+                      <div className="text-green-400 font-semibold text-xs">
+                        {exercise.lastLog.date.toLocaleDateString()}
+                      </div>
                     </div>
                   </div>
                 </div>

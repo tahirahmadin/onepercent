@@ -9,7 +9,7 @@ import { Profile } from "./components/Profile";
 type Tab = "logging" | "analytics" | "profile";
 
 function App() {
-  const { user, loading, signInWithGoogle, signInAsAdmin, signOut } = useAuth();
+  const { user, loading, signInWithGoogle, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("logging");
 
   if (loading) {
@@ -23,18 +23,16 @@ function App() {
   }
 
   if (!user) {
-    return <Login onSignIn={signInWithGoogle} onAdminSignIn={signInAsAdmin} />;
+    return <Login onSignIn={signInWithGoogle} />;
   }
 
   return (
     <div className="h-screen flex flex-col bg-black">
       <header className="bg-gray-950/80 backdrop-blur-xl border-b border-green-900/30 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img
-            src="https://cdn.iconscout.com/icon/free/png-256/free-workout-icon-svg-download-png-1100757.png"
-            alt="OnePercent"
-            className="w-10 h-10"
-          />
+          <div className="bg-green-600 p-2 rounded-xl shadow-lg">
+            <Dumbbell className="w-6 h-6 text-black" />
+          </div>
           <div>
             <h1 className="text-xl font-bold text-green-400">OnePercent</h1>
             <p className="text-xs text-green-700">Track Your Progress</p>
