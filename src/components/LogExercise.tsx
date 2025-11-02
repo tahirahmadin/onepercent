@@ -270,27 +270,19 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
                       autoFocus
                       required
                     />
+                    {previousHighWeight !== null ? (
+                      <div className="mt-3 pt-3 border-t border-green-900/30 text-center">
+                        <div className="text-xs text-green-700 mb-0.5">
+                          Previous High Weight
+                        </div>
+                        <div className="text-base font-bold text-green-400">
+                          {previousHighWeight} kg
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
-
-              {previousHighWeight !== null && (
-                <div className="bg-green-950/40 backdrop-blur-xl rounded-2xl p-4 border border-green-800/30 mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-green-900/50 p-2 rounded-lg">
-                      <Trophy className="w-5 h-5 text-green-400" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-xs text-green-700 mb-0.5">
-                        Previous High Weight
-                      </div>
-                      <div className="text-xl font-bold text-green-400">
-                        {previousHighWeight} kg
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               <button
                 type="submit"
