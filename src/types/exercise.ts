@@ -1,4 +1,9 @@
-export type ExerciseCategory = 'Chest' | 'Back' | 'Shoulder' | 'Core' | 'Triceps' | 'Legs';
+export type ExerciseCategory =
+  | "Chest"
+  | "Back"
+  | "Shoulder"
+  | "Triceps"
+  | "Legs";
 
 export interface ExerciseLog {
   id: string;

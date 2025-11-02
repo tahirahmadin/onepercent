@@ -3,7 +3,6 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
-  Calendar,
   Dumbbell,
   Target,
 } from "lucide-react";
@@ -18,7 +17,6 @@ const categories: ExerciseCategory[] = [
   "Chest",
   "Back",
   "Shoulder",
-  "Core",
   "Triceps",
   "Legs",
 ];
@@ -27,7 +25,6 @@ const categoryColors: Record<ExerciseCategory, string> = {
   Chest: "bg-green-700",
   Back: "bg-green-600",
   Shoulder: "bg-green-800",
-  Core: "bg-green-600",
   Triceps: "bg-green-700",
   Legs: "bg-green-800",
 };
@@ -36,7 +33,6 @@ const categoryBorderColors: Record<ExerciseCategory, string> = {
   Chest: "border-green-700",
   Back: "border-green-600",
   Shoulder: "border-green-800",
-  Core: "border-green-600",
   Triceps: "border-green-700",
   Legs: "border-green-800",
 };

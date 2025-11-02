@@ -1,20 +1,28 @@
-import { useMemo } from 'react';
-import { User as UserIcon, Mail, Calendar, Dumbbell, TrendingUp, Award, Target, Flame } from 'lucide-react';
-import { User } from 'firebase/auth';
-import { useExerciseLogs } from '../hooks/useExerciseLogs';
-import { ExerciseCategory } from '../types/exercise';
+import { useMemo } from "react";
+import {
+  User as UserIcon,
+  Mail,
+  Calendar,
+  Dumbbell,
+  TrendingUp,
+  Award,
+  Target,
+  Flame,
+} from "lucide-react";
+import { User } from "firebase/auth";
+import { useExerciseLogs } from "../hooks/useExerciseLogs";
+import { ExerciseCategory } from "../types/exercise";
 
 interface ProfileProps {
   user: User;
 }
 
 const categoryColors: Record<ExerciseCategory, string> = {
-  Chest: 'bg-green-700',
-  Back: 'bg-green-600',
-  Shoulder: 'bg-green-800',
-  Core: 'bg-green-600',
-  Triceps: 'bg-green-700',
-  Legs: 'bg-green-800',
+  Chest: "bg-green-700",
+  Back: "bg-green-600",
+  Shoulder: "bg-green-800",
+  Triceps: "bg-green-700",
+  Legs: "bg-green-800",
 };
 
 export function Profile({ user }: ProfileProps) {
@@ -41,11 +49,19 @@ export function Profile({ user }: ProfileProps) {
 
     const categoryCount = new Map<ExerciseCategory, number>();
     logs.forEach((log) => {
-      categoryCount.set(log.category, (categoryCount.get(log.category) || 0) + 1);
+      categoryCount.set(
+        log.category,
+        (categoryCount.get(log.category) || 0) + 1
+      );
     });
-    const favoriteCategory = Array.from(categoryCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+    const favoriteCategory =
+      Array.from(categoryCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] ||
+      null;
 
-    const exerciseCount = new Map<string, { name: string; category: ExerciseCategory; count: number }>();
+    const exerciseCount = new Map<
+      string,
+      { name: string; category: ExerciseCategory; count: number }
+    >();
     logs.forEach((log) => {
       const existing = exerciseCount.get(log.exerciseName);
       if (existing) {
@@ -58,11 +74,15 @@ export function Profile({ user }: ProfileProps) {
         });
       }
     });
-    const topExercise = Array.from(exerciseCount.values()).sort((a, b) => b.count - a.count)[0] || null;
+    const topExercise =
+      Array.from(exerciseCount.values()).sort((a, b) => b.count - a.count)[0] ||
+      null;
 
     const maxWeight = Math.max(...logs.map((log) => log.weight));
 
-    const sortedLogs = [...logs].sort((a, b) => a.date.getTime() - b.date.getTime());
+    const sortedLogs = [...logs].sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    );
     const firstWorkoutDate = sortedLogs[0]?.date || null;
     const lastWorkoutDate = sortedLogs[sortedLogs.length - 1]?.date || null;
 
@@ -89,7 +109,12 @@ export function Profile({ user }: ProfileProps) {
     }
 
     const daysSinceFirst = firstWorkoutDate
-      ? Math.max(1, Math.floor((Date.now() - firstWorkoutDate.getTime()) / (1000 * 60 * 60 * 24)))
+      ? Math.max(
+          1,
+          Math.floor(
+            (Date.now() - firstWorkoutDate.getTime()) / (1000 * 60 * 60 * 24)
+          )
+        )
       : 1;
     const avgWorkoutsPerWeek = (uniqueDates.size / daysSinceFirst) * 7;
 
@@ -123,14 +148,20 @@ export function Profile({ user }: ProfileProps) {
         <div className="bg-green-950/30 backdrop-blur-xl rounded-2xl p-6 border border-green-800/30">
           <div className="flex items-center gap-4">
             {user.photoURL ? (
-              <img src={user.photoURL} alt={user.displayName || 'User'} className="w-20 h-20 rounded-full border-4 border-green-700/50" />
+              <img
+                src={user.photoURL}
+                alt={user.displayName || "User"}
+                className="w-20 h-20 rounded-full border-4 border-green-700/50"
+              />
             ) : (
               <div className="w-20 h-20 rounded-full bg-green-600 flex items-center justify-center">
                 <UserIcon className="w-10 h-10 text-black" />
               </div>
             )}
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-green-400 mb-1">{user.displayName || 'User'}</h2>
+              <h2 className="text-2xl font-bold text-green-400 mb-1">
+                {user.displayName || "User"}
+              </h2>
               <div className="flex items-center gap-2 text-green-500">
                 <Mail className="w-4 h-4" />
                 <span className="text-sm">{user.email}</span>
@@ -138,7 +169,10 @@ export function Profile({ user }: ProfileProps) {
               {insights.firstWorkoutDate && (
                 <div className="flex items-center gap-2 text-green-700 mt-1">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-xs">Member since {insights.firstWorkoutDate.toLocaleDateString()}</span>
+                  <span className="text-xs">
+                    Member since{" "}
+                    {insights.firstWorkoutDate.toLocaleDateString()}
+                  </span>
                 </div>
               )}
             </div>
@@ -153,7 +187,9 @@ export function Profile({ user }: ProfileProps) {
                   <Flame className="w-5 h-5 text-green-500" />
                   <span className="text-sm text-green-400">Current Streak</span>
                 </div>
-                <div className="text-3xl font-bold text-green-400">{insights.currentStreak}</div>
+                <div className="text-3xl font-bold text-green-400">
+                  {insights.currentStreak}
+                </div>
                 <div className="text-xs text-green-700 mt-1">days in a row</div>
               </div>
 
@@ -164,8 +200,12 @@ export function Profile({ user }: ProfileProps) {
                 </div>
                 {insights.topExercise ? (
                   <>
-                    <div className="text-lg font-bold text-green-400 truncate">{insights.topExercise.name}</div>
-                    <div className="text-xs text-green-700 mt-1">{insights.topExercise.count} logs</div>
+                    <div className="text-lg font-bold text-green-400 truncate">
+                      {insights.topExercise.name}
+                    </div>
+                    <div className="text-xs text-green-700 mt-1">
+                      {insights.topExercise.count} logs
+                    </div>
                   </>
                 ) : (
                   <>
@@ -180,8 +220,12 @@ export function Profile({ user }: ProfileProps) {
                   <Target className="w-5 h-5 text-green-500" />
                   <span className="text-sm text-green-400">Exercises</span>
                 </div>
-                <div className="text-3xl font-bold text-green-400">{insights.uniqueExercises}</div>
-                <div className="text-xs text-green-700 mt-1">unique exercises</div>
+                <div className="text-3xl font-bold text-green-400">
+                  {insights.uniqueExercises}
+                </div>
+                <div className="text-xs text-green-700 mt-1">
+                  unique exercises
+                </div>
               </div>
 
               <div className="bg-green-950/50 backdrop-blur-xl rounded-2xl p-4 border border-green-800/30">
@@ -189,8 +233,12 @@ export function Profile({ user }: ProfileProps) {
                   <Award className="w-5 h-5 text-green-500" />
                   <span className="text-sm text-green-400">Max Weight</span>
                 </div>
-                <div className="text-3xl font-bold text-green-400">{insights.maxWeight}</div>
-                <div className="text-xs text-green-700 mt-1">kg personal best</div>
+                <div className="text-3xl font-bold text-green-400">
+                  {insights.maxWeight}
+                </div>
+                <div className="text-xs text-green-700 mt-1">
+                  kg personal best
+                </div>
               </div>
             </div>
 
@@ -202,16 +250,24 @@ export function Profile({ user }: ProfileProps) {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-green-500">Total Workouts</span>
-                  <span className="text-green-400 font-semibold">{insights.totalWorkouts}</span>
+                  <span className="text-green-400 font-semibold">
+                    {insights.totalWorkouts}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-green-500">Avg Workouts per Week</span>
-                  <span className="text-green-400 font-semibold">{insights.avgWorkoutsPerWeek.toFixed(1)}</span>
+                  <span className="text-green-400 font-semibold">
+                    {insights.avgWorkoutsPerWeek.toFixed(1)}
+                  </span>
                 </div>
                 {insights.favoriteCategory && (
                   <div className="flex justify-between items-center">
                     <span className="text-green-500">Favorite Category</span>
-                    <span className={`${categoryColors[insights.favoriteCategory]} text-black px-3 py-1 rounded-lg text-sm font-semibold`}>
+                    <span
+                      className={`${
+                        categoryColors[insights.favoriteCategory]
+                      } text-black px-3 py-1 rounded-lg text-sm font-semibold`}
+                    >
                       {insights.favoriteCategory}
                     </span>
                   </div>
@@ -219,7 +275,9 @@ export function Profile({ user }: ProfileProps) {
                 {insights.lastWorkoutDate && (
                   <div className="flex justify-between items-center">
                     <span className="text-green-500">Last Workout</span>
-                    <span className="text-green-400 font-semibold">{insights.lastWorkoutDate.toLocaleDateString()}</span>
+                    <span className="text-green-400 font-semibold">
+                      {insights.lastWorkoutDate.toLocaleDateString()}
+                    </span>
                   </div>
                 )}
               </div>
@@ -237,8 +295,12 @@ export function Profile({ user }: ProfileProps) {
                       <Award className="w-6 h-6 text-green-500" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-green-400 font-semibold">Getting Started</h4>
-                      <p className="text-xs text-green-700">Logged 10+ workouts</p>
+                      <h4 className="text-green-400 font-semibold">
+                        Getting Started
+                      </h4>
+                      <p className="text-xs text-green-700">
+                        Logged 10+ workouts
+                      </p>
                     </div>
                   </div>
                 )}
@@ -248,8 +310,12 @@ export function Profile({ user }: ProfileProps) {
                       <TrendingUp className="w-6 h-6 text-green-500" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-green-400 font-semibold">Dedicated Trainer</h4>
-                      <p className="text-xs text-green-700">Logged 50+ workouts</p>
+                      <h4 className="text-green-400 font-semibold">
+                        Dedicated Trainer
+                      </h4>
+                      <p className="text-xs text-green-700">
+                        Logged 50+ workouts
+                      </p>
                     </div>
                   </div>
                 )}
@@ -266,7 +332,9 @@ export function Profile({ user }: ProfileProps) {
                 )}
                 {insights.totalWorkouts < 10 && (
                   <div className="text-center py-8">
-                    <p className="text-green-700">Keep logging workouts to unlock achievements!</p>
+                    <p className="text-green-700">
+                      Keep logging workouts to unlock achievements!
+                    </p>
                   </div>
                 )}
               </div>
@@ -275,8 +343,13 @@ export function Profile({ user }: ProfileProps) {
         ) : (
           <div className="bg-gray-950/80 backdrop-blur-xl rounded-2xl p-8 border border-green-900/30 text-center">
             <Dumbbell className="w-16 h-16 text-green-900 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-green-400 mb-2">No Workout Data Yet</h3>
-            <p className="text-green-700">Start logging your exercises to see your insights and achievements!</p>
+            <h3 className="text-xl font-semibold text-green-400 mb-2">
+              No Workout Data Yet
+            </h3>
+            <p className="text-green-700">
+              Start logging your exercises to see your insights and
+              achievements!
+            </p>
           </div>
         )}
       </div>

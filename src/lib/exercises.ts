@@ -1,144 +1,147 @@
-import { Exercise } from '../types/exercise';
+import { Exercise } from "../types/exercise";
 
 export const predefinedExercises: Exercise[] = [
   {
-    name: 'Pully Push Down',
-    category: 'Triceps',
-    imageUrl: 'https://images.pexels.com/photos/4162483/pexels-photo-4162483.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Pully Push Down",
+    category: "Triceps",
+    imageUrl:
+      "https://fitliferegime.com/wp-content/uploads/2023/01/Triceps-Pushdown.jpg",
   },
   {
-    name: 'Overhead Dumbbell',
-    category: 'Shoulder',
-    imageUrl: 'https://images.pexels.com/photos/3837757/pexels-photo-3837757.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Overhead Dumbbell",
+    category: "Shoulder",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2024/09/Fit-and-muscular-man-performing-a-incline-dumbbell-press-for-his-dumbell-chest-and-shoulder-workout.jpg?quality=86&strip=all",
   },
   {
-    name: 'Barbell Curl',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/3490348/pexels-photo-3490348.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Barbell Curl",
+    category: "Back",
+    imageUrl:
+      "https://cdn.prod.website-files.com/5fe33d036237252135e3e74d/6259c9b471bafda9fad96b33_barbell%20curl%20exercise%20by%20cult.fit.jpg",
   },
   {
-    name: 'Pull Ups',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Pull Ups",
+    category: "Back",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2019/06/Man-Pullup-Park-Blue-Skies.jpg?quality=86&strip=all",
   },
   {
-    name: 'Overhead Press',
-    category: 'Shoulder',
-    imageUrl: 'https://images.pexels.com/photos/3837757/pexels-photo-3837757.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Overhead Press",
+    category: "Shoulder",
+    imageUrl:
+      "https://cdn.muscleandstrength.com/sites/default/files/military-overhead-press.jpg",
   },
   {
-    name: 'Inclined Bar Press',
-    category: 'Chest',
-    imageUrl: 'https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Inclined Bar Press",
+    category: "Chest",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2019/12/Incline-Barbell-Bench-Press.jpg?quality=86&strip=all",
   },
   {
-    name: 'Deadlift',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Deadlift",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Lats Pull Down',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/4162481/pexels-photo-4162481.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Lats Pull Down",
+    category: "Back",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2024/06/A-strong-male-working-out-his-back-muscles-with-lat-pulldown-variations.jpg?quality=86&strip=all",
   },
   {
-    name: 'Wide Grip Rowing',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/4162438/pexels-photo-4162438.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Wide Grip Rowing",
+    category: "Back",
+    imageUrl: "https://i.ytimg.com/vi/YKAeU55CkVk/maxresdefault.jpg",
   },
   {
-    name: 'Close Grip Lats Pull Down',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/4162481/pexels-photo-4162481.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Close Grip Lats Pull Down",
+    category: "Back",
+    imageUrl:
+      "https://www.puregym.com/media/5jqls0nn/close-grip-lat-pulldown.jpg?quality=80",
   },
   {
-    name: 'Double Rope',
-    category: 'Triceps',
-    imageUrl: 'https://images.pexels.com/photos/4162483/pexels-photo-4162483.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Double Rope",
+    category: "Triceps",
+    imageUrl:
+      "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Chest Supported Dumbbell Row',
-    category: 'Back',
-    imageUrl: 'https://images.pexels.com/photos/4162438/pexels-photo-4162438.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Chest Supported Dumbbell Row",
+    category: "Back",
+    imageUrl:
+      "https://cdn.muscleandstrength.com/sites/default/files/chest-supported-dumbbell-row-1.jpg",
   },
   {
-    name: 'Bench Press',
-    category: 'Chest',
-    imageUrl: 'https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Bench Press",
+    category: "Chest",
+    imageUrl:
+      "https://images.ctfassets.net/8urtyqugdt2l/4wPk3KafRwgpwIcJzb0VRX/4894054c6182c62c1d850628935a4b0b/desktop-best-chest-exercises.jpg",
   },
   {
-    name: 'Dumbbell Flyes',
-    category: 'Chest',
-    imageUrl: 'https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Dumbbell Flyes",
+    category: "Chest",
+    imageUrl:
+      "https://cdn.muscleandstrength.com/sites/default/files/dumbbell-fly.jpg",
   },
   {
-    name: 'Cable Crossover',
-    category: 'Chest',
-    imageUrl: 'https://images.pexels.com/photos/4162519/pexels-photo-4162519.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Cable Crossover",
+    category: "Chest",
+    imageUrl:
+      "https://cdn.muscleandstrength.com/sites/default/files/cable-iron-cross-1.jpg",
   },
   {
-    name: 'Tricep Dips',
-    category: 'Triceps',
-    imageUrl: 'https://images.pexels.com/photos/4162483/pexels-photo-4162483.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Tricep Dips",
+    category: "Triceps",
+    imageUrl:
+      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Skull Crushers',
-    category: 'Triceps',
-    imageUrl: 'https://images.pexels.com/photos/4162483/pexels-photo-4162483.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Skull Crushers",
+    category: "Triceps",
+    imageUrl:
+      "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Lateral Raises',
-    category: 'Shoulder',
-    imageUrl: 'https://images.pexels.com/photos/3837757/pexels-photo-3837757.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Lateral Raises",
+    category: "Shoulder",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2019/06/Jeremy-Buendia-Lateral-Dumbbell-Raise.jpg?quality=86&strip=all",
   },
   {
-    name: 'Front Raises',
-    category: 'Shoulder',
-    imageUrl: 'https://images.pexels.com/photos/3837757/pexels-photo-3837757.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Front Raises",
+    category: "Shoulder",
+    imageUrl:
+      "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2025/03/Young-fit-man-performing-a-dumbbell-front-raise-exercise-for-his-shoulder-workout.jpg?quality=86&strip=all",
   },
   {
-    name: 'Squats',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Squats",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Leg Press',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/4162519/pexels-photo-4162519.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Leg Press",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Leg Curl',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/4162519/pexels-photo-4162519.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Leg Curl",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Leg Extension',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/4162519/pexels-photo-4162519.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Leg Extension",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=400&h=400&fit=crop&q=80",
   },
   {
-    name: 'Calf Raises',
-    category: 'Legs',
-    imageUrl: 'https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=400'
-  },
-  {
-    name: 'Plank',
-    category: 'Core',
-    imageUrl: 'https://images.pexels.com/photos/3984340/pexels-photo-3984340.jpeg?auto=compress&cs=tinysrgb&w=400'
-  },
-  {
-    name: 'Crunches',
-    category: 'Core',
-    imageUrl: 'https://images.pexels.com/photos/3984340/pexels-photo-3984340.jpeg?auto=compress&cs=tinysrgb&w=400'
-  },
-  {
-    name: 'Russian Twists',
-    category: 'Core',
-    imageUrl: 'https://images.pexels.com/photos/3984340/pexels-photo-3984340.jpeg?auto=compress&cs=tinysrgb&w=400'
-  },
-  {
-    name: 'Hanging Leg Raises',
-    category: 'Core',
-    imageUrl: 'https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=400'
+    name: "Calf Raises",
+    category: "Legs",
+    imageUrl:
+      "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=400&fit=crop&q=80",
   },
 ];
