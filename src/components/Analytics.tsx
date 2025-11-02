@@ -363,7 +363,7 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                 >
                   <div className="mb-3">
                     <div className="flex items-center gap-2 mb-2">
-                      <h4 className="text-sm sm:text-base text-green-400 font-semibold line-clamp-2 flex-[3] min-w-0 leading-tight">
+                      <h4 className="text-sm sm:text-base text-green-400 font-semibold line-clamp-2 flex-[3] min-w-0">
                         {exercise.name}{" "}
                         <span
                           className={`inline-block text-xs px-2 py-0.5 rounded-md ${

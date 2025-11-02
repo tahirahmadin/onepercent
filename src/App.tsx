@@ -16,7 +16,19 @@ function App() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-gray-900 border-t-green-500"></div>
+          <div className="mb-6 flex justify-center">
+            <div className="bg-green-600 p-4 rounded-2xl shadow-2xl animate-pulse">
+              <Dumbbell className="w-10 h-10 text-black" />
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-green-400 mb-2">OnePercent</h2>
+          <p className="text-green-700 text-sm mb-6">Track Your Progress</p>
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-green-900/30 rounded-full"></div>
+              <div className="w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+            </div>
+          </div>
         </div>
       </div>
     );
