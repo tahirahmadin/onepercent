@@ -119,7 +119,7 @@ export function Profile({ user }: ProfileProps) {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="p-4 space-y-6">
+      <div className="p-4 pb-24 space-y-6">
         <div className="bg-green-950/30 backdrop-blur-xl rounded-2xl p-6 border border-green-800/30">
           <div className="flex items-center gap-4">
             {user.photoURL ? (

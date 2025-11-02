@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Plus, ArrowLeft, Check, Trash2, Calendar } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Plus, ArrowLeft, Check, Trash2, Calendar, Trophy } from 'lucide-react';
 import { ExerciseCategory } from '../types/exercise';
 import { predefinedExercises } from '../lib/exercises';
 import { useExerciseLogs } from '../hooks/useExerciseLogs';
@@ -96,6 +96,20 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
     return acc;
   }, {} as Record<string, typeof logs>);
 
+  // Calculate previous high weight for selected exercise
+  const previousHighWeight = useMemo(() => {
+    if (!selectedExercise) return null;
+    
+    const exerciseLogs = logs.filter(
+      log => log.exerciseName === selectedExercise.name
+    );
+    
+    if (exerciseLogs.length === 0) return null;
+    
+    const maxWeight = Math.max(...exerciseLogs.map(log => log.weight));
+    return maxWeight;
+  }, [logs, selectedExercise]);
+
   if (showForm) {
     return (
       <div className="h-full flex flex-col bg-black">
@@ -120,7 +134,7 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
 
         {formStep === 1 ? (
           <div className="flex-1 overflow-y-auto">
-            <div className="p-4">
+            <div className="p-4 pb-24">
               <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
                 <button
                   onClick={() => setSelectedCategory('All')}
@@ -171,7 +185,7 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
             </div>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 pb-24">
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
               <div className="bg-gray-950/80 backdrop-blur-xl rounded-2xl p-6 border border-green-900/30 mb-6">
                 <div className="text-center mb-6">
@@ -185,13 +199,16 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
                   <div>
                     <label className="block text-sm font-medium text-green-500 mb-2">Date</label>
                     <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-700" />
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-700 pointer-events-none z-10" />
                       <input
                         type="date"
                         value={formatDateForInput(selectedDate)}
                         onChange={(e) => setSelectedDate(new Date(e.target.value))}
                         max={formatDateForInput(new Date())}
-                        className="w-full bg-black text-green-400 pl-11 pr-4 py-3 rounded-xl border border-green-900/50 focus:border-green-600/50 focus:outline-none focus:ring-2 focus:ring-green-600/20"
+                        className="w-full bg-black text-green-400 pl-11 pr-4 py-3.5 rounded-xl border border-green-900/50 focus:border-green-600/50 focus:outline-none focus:ring-2 focus:ring-green-600/20 text-base min-h-[48px] touch-manipulation"
+                        style={{
+                          fontSize: '16px', // Prevents zoom on iOS
+                        }}
                       />
                     </div>
                   </div>
@@ -210,6 +227,20 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
                   </div>
                 </div>
               </div>
+
+              {previousHighWeight !== null && (
+                <div className="bg-green-950/40 backdrop-blur-xl rounded-2xl p-4 border border-green-800/30 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-green-900/50 p-2 rounded-lg">
+                      <Trophy className="w-5 h-5 text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-xs text-green-700 mb-0.5">Previous High Weight</div>
+                      <div className="text-xl font-bold text-green-400">{previousHighWeight} kg</div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"
@@ -237,7 +268,7 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-4">
+      <div className="flex-1 overflow-y-auto px-4 pb-24">
         {loading ? (
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-gray-900 border-t-green-600"></div>

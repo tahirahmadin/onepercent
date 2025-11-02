@@ -185,7 +185,7 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="p-4 space-y-6">
+      <div className="p-4 pb-24 space-y-6">
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-green-950/40 backdrop-blur-xl rounded-2xl p-4 border border-green-800/30">
             <div className="flex items-center gap-2 mb-2">

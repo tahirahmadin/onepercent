@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { Dumbbell, TrendingUp, LogOut, User } from 'lucide-react';
-import { useAuth } from './hooks/useAuth';
-import { Login } from './components/Login';
-import { LogExercise } from './components/LogExercise';
-import { Analytics } from './components/Analytics';
-import { Profile } from './components/Profile';
+import { useState } from "react";
+import { Dumbbell, TrendingUp, LogOut, User } from "lucide-react";
+import { useAuth } from "./hooks/useAuth";
+import { Login } from "./components/Login";
+import { LogExercise } from "./components/LogExercise";
+import { Analytics } from "./components/Analytics";
+import { Profile } from "./components/Profile";
 
-type Tab = 'logging' | 'analytics' | 'profile';
+type Tab = "logging" | "analytics" | "profile";
 
 function App() {
   const { user, loading, signInWithGoogle, signInAsAdmin, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>('logging');
+  const [activeTab, setActiveTab] = useState<Tab>("logging");
 
   if (loading) {
     return (
@@ -30,9 +30,11 @@ function App() {
     <div className="h-screen flex flex-col bg-black">
       <header className="bg-gray-950/80 backdrop-blur-xl border-b border-green-900/30 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-green-600 p-2 rounded-xl shadow-lg">
-            <Dumbbell className="w-6 h-6 text-black" />
-          </div>
+          <img
+            src="https://cdn.iconscout.com/icon/free/png-256/free-workout-icon-svg-download-png-1100757.png"
+            alt="OnePercent"
+            className="w-10 h-10"
+          />
           <div>
             <h1 className="text-xl font-bold text-green-400">OnePercent</h1>
             <p className="text-xs text-green-700">Track Your Progress</p>
@@ -40,7 +42,9 @@ function App() {
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <div className="text-sm font-medium text-green-400">{user.displayName}</div>
+            <div className="text-sm font-medium text-green-400">
+              {user.displayName}
+            </div>
             <div className="text-xs text-green-700">{user.email}</div>
           </div>
           <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center sm:hidden">
@@ -57,19 +61,17 @@ function App() {
       </header>
 
       <main className="flex-1 overflow-hidden pb-20">
-        {activeTab === 'logging' && <LogExercise userEmail={user.email} />}
-        {activeTab === 'analytics' && <Analytics userEmail={user.email} />}
-        {activeTab === 'profile' && <Profile user={user} />}
+        {activeTab === "logging" && <LogExercise userEmail={user.email} />}
+        {activeTab === "analytics" && <Analytics userEmail={user.email} />}
+        {activeTab === "profile" && <Profile user={user} />}
       </main>
 
       <nav className="fixed bottom-0 left-0 right-0 bg-gray-950/95 backdrop-blur-xl border-t border-green-900/30 safe-area-inset-bottom z-50">
         <div className="flex max-w-lg mx-auto">
           <button
-            onClick={() => setActiveTab('logging')}
+            onClick={() => setActiveTab("logging")}
             className={`flex-1 py-4 px-4 font-semibold transition-all ${
-              activeTab === 'logging'
-                ? 'text-green-400'
-                : 'text-green-800'
+              activeTab === "logging" ? "text-green-400" : "text-green-800"
             }`}
           >
             <div className="flex flex-col items-center gap-1">
@@ -78,11 +80,9 @@ function App() {
             </div>
           </button>
           <button
-            onClick={() => setActiveTab('analytics')}
+            onClick={() => setActiveTab("analytics")}
             className={`flex-1 py-4 px-4 font-semibold transition-all ${
-              activeTab === 'analytics'
-                ? 'text-green-400'
-                : 'text-green-800'
+              activeTab === "analytics" ? "text-green-400" : "text-green-800"
             }`}
           >
             <div className="flex flex-col items-center gap-1">
@@ -91,11 +91,9 @@ function App() {
             </div>
           </button>
           <button
-            onClick={() => setActiveTab('profile')}
+            onClick={() => setActiveTab("profile")}
             className={`flex-1 py-4 px-4 font-semibold transition-all ${
-              activeTab === 'profile'
-                ? 'text-green-400'
-                : 'text-green-800'
+              activeTab === "profile" ? "text-green-400" : "text-green-800"
             }`}
           >
             <div className="flex flex-col items-center gap-1">
