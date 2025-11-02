@@ -362,51 +362,51 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                   className="bg-black rounded-xl p-3 sm:p-4 border border-green-900/30"
                 >
                   <div className="mb-3">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm sm:text-base text-green-400 font-semibold line-clamp-2 leading-tight">
-                          {exercise.name}
-                        </h4>
-                      </div>
-                      <div className="text-right flex-shrink-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h4 className="text-sm sm:text-base text-green-400 font-semibold line-clamp-2 flex-[3] min-w-0 leading-tight">
+                        {exercise.name}{" "}
+                        <span
+                          className={`inline-block text-xs px-2 py-0.5 rounded-md ${
+                            categoryColors[exercise.category]
+                          } text-black`}
+                        >
+                          {exercise.category}
+                        </span>
+                      </h4>
+                      <div className="text-right flex-1 flex-shrink-0">
                         <div className="text-xl sm:text-2xl font-bold text-green-500">
                           {exercise.maxWeight}kg
                         </div>
-                        <div className="text-xs text-green-800">max</div>
+                        <div className="text-xs text-green-800">
+                          {" "}
+                          <div className="flex items-center justify-end">
+                            {exercise.trend === "up" && (
+                              <div className="flex items-center justify-end gap-1 bg-green-900/40  py-0.5 rounded-lg">
+                                <TrendingUp className="w-3 h-3 text-green-500" />
+                                <span className="text-xs text-green-500 font-semibold">
+                                  +{exercise.trendPercentage.toFixed(0)}%
+                                </span>
+                              </div>
+                            )}
+                            {exercise.trend === "down" && (
+                              <div className="flex items-center justify-end gap-1 bg-red-900/20  py-0.5 rounded-lg">
+                                <TrendingDown className="w-3 h-3 text-red-400" />
+                                <span className="text-xs text-red-400 font-semibold">
+                                  -{exercise.trendPercentage.toFixed(0)}%
+                                </span>
+                              </div>
+                            )}
+                            {exercise.trend === "stable" && (
+                              <div className="flex items-center justify-end gap-1 bg-gray-900/40  py-0.5 rounded-lg">
+                                <Minus className="w-3 h-3 text-green-700" />
+                                <span className="text-xs text-green-700 font-semibold">
+                                  Stable
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span
-                        className={`inline-block text-xs px-2 py-0.5 rounded-md ${
-                          categoryColors[exercise.category]
-                        } text-black`}
-                      >
-                        {exercise.category}
-                      </span>
-                      {exercise.trend === "up" && (
-                        <div className="flex items-center gap-1 bg-green-900/40 px-2 py-0.5 rounded-lg">
-                          <TrendingUp className="w-3 h-3 text-green-500" />
-                          <span className="text-xs text-green-500 font-semibold">
-                            +{exercise.trendPercentage.toFixed(0)}%
-                          </span>
-                        </div>
-                      )}
-                      {exercise.trend === "down" && (
-                        <div className="flex items-center gap-1 bg-red-900/20 px-2 py-0.5 rounded-lg">
-                          <TrendingDown className="w-3 h-3 text-red-400" />
-                          <span className="text-xs text-red-400 font-semibold">
-                            -{exercise.trendPercentage.toFixed(0)}%
-                          </span>
-                        </div>
-                      )}
-                      {exercise.trend === "stable" && (
-                        <div className="flex items-center gap-1 bg-gray-900/40 px-2 py-0.5 rounded-lg">
-                          <Minus className="w-3 h-3 text-green-700" />
-                          <span className="text-xs text-green-700 font-semibold">
-                            Stable
-                          </span>
-                        </div>
-                      )}
                     </div>
                   </div>
 
