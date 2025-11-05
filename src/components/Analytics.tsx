@@ -39,9 +39,8 @@ const categoryBorderColors: Record<ExerciseCategory, string> = {
 
 export function Analytics({ userEmail }: AnalyticsProps) {
   const { logs, loading } = useExerciseLogs(userEmail);
-  const [selectedCategory, setSelectedCategory] = useState<
-    ExerciseCategory | "All"
-  >("All");
+  const [selectedCategory, setSelectedCategory] =
+    useState<ExerciseCategory>("Chest");
 
   const analytics = useMemo(() => {
     const exerciseStats = new Map<
@@ -146,7 +145,6 @@ export function Analytics({ userEmail }: AnalyticsProps) {
   }, [logs]);
 
   const filteredAnalytics = useMemo(() => {
-    if (selectedCategory === "All") return analytics;
     return analytics.filter((ex) => ex.category === selectedCategory);
   }, [analytics, selectedCategory]);
 
@@ -254,88 +252,11 @@ export function Analytics({ userEmail }: AnalyticsProps) {
 
         <div className="bg-gray-950/80 backdrop-blur-xl rounded-2xl p-5 border border-green-900/30">
           <h3 className="text-lg font-bold text-green-400 mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-green-500" />
-            Weight Progress
-          </h3>
-          <div className="relative h-48 bg-black rounded-lg p-4 pl-12">
-            <svg
-              className="w-full h-full"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-            >
-              <line
-                x1="0"
-                y1="25"
-                x2="100"
-                y2="25"
-                stroke="#0a3d0a"
-                strokeWidth="0.3"
-              />
-              <line
-                x1="0"
-                y1="50"
-                x2="100"
-                y2="50"
-                stroke="#0a3d0a"
-                strokeWidth="0.3"
-              />
-              <line
-                x1="0"
-                y1="75"
-                x2="100"
-                y2="75"
-                stroke="#0a3d0a"
-                strokeWidth="0.3"
-              />
-
-              <polyline
-                fill="none"
-                stroke="#22c55e"
-                strokeWidth="1"
-                points={overallWeightByDate
-                  .map((data, idx, arr) => {
-                    const x = (idx / (arr.length - 1 || 1)) * 100;
-                    const y =
-                      100 - ((data.avgWeight / maxOverallWeight) * 80 + 10);
-                    return `${x},${y}`;
-                  })
-                  .join(" ")}
-              />
-
-              {overallWeightByDate.map((data, idx, arr) => {
-                const x = (idx / (arr.length - 1 || 1)) * 100;
-                const y = 100 - ((data.avgWeight / maxOverallWeight) * 80 + 10);
-                return (
-                  <circle key={idx} cx={x} cy={y} r="1.5" fill="#22c55e" />
-                );
-              })}
-            </svg>
-
-            <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-green-800 -ml-2">
-              <span>{maxOverallWeight.toFixed(0)}kg</span>
-              <span>{(maxOverallWeight * 0.5).toFixed(0)}kg</span>
-              <span>0kg</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gray-950/80 backdrop-blur-xl rounded-2xl p-5 border border-green-900/30">
-          <h3 className="text-lg font-bold text-green-400 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-green-500" />
             Exercise Progress
           </h3>
 
           <div className="flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide">
-            <button
-              onClick={() => setSelectedCategory("All")}
-              className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
-                selectedCategory === "All"
-                  ? "bg-green-600 text-black shadow-lg"
-                  : "bg-gray-900/50 text-green-600"
-              }`}
-            >
-              All
-            </button>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -410,41 +331,40 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                     </div>
                   </div>
 
-                  <div className="relative h-24 sm:h-32 bg-gray-950 rounded-lg p-3 sm:p-4 pl-10 sm:pl-12">
+                  <div className="relative h-48 sm:h-64 bg-gray-950 rounded-lg p-3 sm:p-4 pl-14 sm:pl-16">
                     <svg
                       className="w-full h-full"
                       viewBox="0 0 100 100"
                       preserveAspectRatio="none"
                     >
-                      <line
-                        x1="0"
-                        y1="25"
-                        x2="100"
-                        y2="25"
-                        stroke="#0a3d0a"
-                        strokeWidth="0.3"
-                      />
-                      <line
-                        x1="0"
-                        y1="50"
-                        x2="100"
-                        y2="50"
-                        stroke="#0a3d0a"
-                        strokeWidth="0.3"
-                      />
-                      <line
-                        x1="0"
-                        y1="75"
-                        x2="100"
-                        y2="75"
-                        stroke="#0a3d0a"
-                        strokeWidth="0.3"
-                      />
+                      {/* Grid lines - more visible and Apple-style */}
+                      {[0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100].map(
+                        (yPos) => (
+                          <line
+                            key={yPos}
+                            x1="0"
+                            y1={yPos}
+                            x2="100"
+                            y2={yPos}
+                            stroke={
+                              yPos === 0 || yPos === 50 || yPos === 100
+                                ? "#1a4d1a"
+                                : "#0f2f0f"
+                            }
+                            strokeWidth={
+                              yPos === 0 || yPos === 50 || yPos === 100
+                                ? "0.5"
+                                : "0.3"
+                            }
+                            opacity="0.8"
+                          />
+                        )
+                      )}
 
                       <polyline
                         fill="none"
                         stroke="#22c55e"
-                        strokeWidth="1"
+                        strokeWidth="2"
                         points={sortedLogs
                           .map((log, idx, arr) => {
                             const x = (idx / (arr.length - 1 || 1)) * 100;
@@ -465,17 +385,27 @@ export function Analytics({ userEmail }: AnalyticsProps) {
                             key={idx}
                             cx={x}
                             cy={y}
-                            r="1.5"
+                            r="2"
                             fill="#22c55e"
                           />
                         );
                       })}
                     </svg>
 
-                    <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-green-800 -ml-2">
-                      <span>{exercise.maxWeight}kg</span>
-                      <span>{(exercise.maxWeight * 0.5).toFixed(0)}kg</span>
-                      <span>0kg</span>
+                    <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-green-600 font-medium">
+                      <span className="text-right w-12 pr-2">
+                        {exercise.maxWeight}kg
+                      </span>
+                      <span className="text-right w-12 pr-2">
+                        {(exercise.maxWeight * 0.75).toFixed(0)}kg
+                      </span>
+                      <span className="text-right w-12 pr-2">
+                        {(exercise.maxWeight * 0.5).toFixed(0)}kg
+                      </span>
+                      <span className="text-right w-12 pr-2">
+                        {(exercise.maxWeight * 0.25).toFixed(0)}kg
+                      </span>
+                      <span className="text-right w-12 pr-2">0kg</span>
                     </div>
                   </div>
 

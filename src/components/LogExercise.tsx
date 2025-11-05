@@ -325,36 +325,36 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
                   <h3 className="text-xs font-semibold text-green-700 mb-1.5 sticky top-0 bg-black/90 backdrop-blur py-1.5 rounded-lg px-2">
                     {date}
                   </h3>
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {dayLogs.map((log) => (
                       <div
                         key={log.id}
-                        className="bg-gray-950/80 backdrop-blur-xl rounded-lg p-2 border border-green-900/30"
+                        className="bg-gray-950/80 backdrop-blur-xl rounded-lg p-3 border border-green-900/30"
                       >
-                        <div className="flex justify-between items-center gap-2">
-                          <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                              <h4 className="text-green-400 font-semibold text-sm truncate">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-2 flex-wrap">
+                              <h4 className="text-green-400 font-semibold text-sm sm:text-base">
                                 {log.exerciseName}
                               </h4>
                               <span
-                                className={`inline-block text-xs px-1.5 py-0.5 rounded border ${
+                                className={`inline-block text-xs px-2 py-0.5 rounded-md border ${
                                   categoryColors[log.category]
                                 } flex-shrink-0`}
                               >
                                 {log.category}
                               </span>
                             </div>
-                            <span className="text-base font-bold text-green-500 flex-shrink-0">
+                            <div className="text-lg sm:text-xl font-bold text-green-500">
                               {log.weight} kg
-                            </span>
+                            </div>
                           </div>
                           <button
                             onClick={() => handleDelete(log.id)}
-                            className="p-1 text-green-700 hover:text-red-400 hover:bg-red-500/10 rounded transition-all flex-shrink-0"
+                            className="p-2 text-green-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all flex-shrink-0 mt-1"
                             title="Delete log"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
