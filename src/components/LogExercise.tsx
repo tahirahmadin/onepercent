@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Plus, ArrowLeft, Check, Trash2, Calendar, Trophy } from "lucide-react";
+import { Plus, ArrowLeft, Check, Trash2, Calendar } from "lucide-react";
 import { ExerciseCategory } from "../types/exercise";
 import { predefinedExercises } from "../lib/exercises";
 import { useExerciseLogs } from "../hooks/useExerciseLogs";
@@ -21,6 +21,7 @@ const categoryColors: Record<ExerciseCategory, string> = {
   Back: "bg-green-900/40 text-green-300 border-green-600/50",
   Shoulder: "bg-green-800/30 text-green-400 border-green-600/50",
   Triceps: "bg-green-800/40 text-green-300 border-green-600/50",
+  Biceps: "bg-green-700/40 text-green-300 border-green-600/50",
   Legs: "bg-green-900/40 text-green-400 border-green-700/50",
 };
 
@@ -94,6 +95,15 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
   const filteredExercises = predefinedExercises.filter((ex) => {
     return selectedCategory === "All" || ex.category === selectedCategory;
   });
+
+  // Create exercise name to image mapping
+  const exerciseImageMap = useMemo(() => {
+    const map = new Map<string, string>();
+    predefinedExercises.forEach((ex) => {
+      map.set(ex.name, ex.imageUrl);
+    });
+    return map;
+  }, []);
 
   // Filter logs to only show last 14 days
   const fourteenDaysAgo = new Date();
@@ -317,48 +327,62 @@ export function LogExercise({ userEmail }: LogExerciseProps) {
             <p className="text-green-700 mt-3 text-sm">Loading logs...</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4 py-4">
             {Object.entries(groupedLogs)
               .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
               .map(([date, dayLogs]) => (
-                <div key={date}>
-                  <h3 className="text-xs font-semibold text-green-700 mb-1.5 sticky top-0 bg-black/90 backdrop-blur py-1.5 rounded-lg px-2">
+                <div key={date} className="space-y-2">
+                  <h3 className="text-sm font-semibold text-green-400 mb-2 sticky top-0 bg-black/90 backdrop-blur py-1.5 rounded-lg px-2 z-10">
                     {date}
                   </h3>
-                  <div className="space-y-2">
-                    {dayLogs.map((log) => (
-                      <div
-                        key={log.id}
-                        className="bg-gray-950/80 backdrop-blur-xl rounded-lg p-3 border border-green-900/30"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-2 flex-wrap">
-                              <h4 className="text-green-400 font-semibold text-sm sm:text-base">
-                                {log.exerciseName}
-                              </h4>
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {dayLogs.map((log) => {
+                      const exerciseImage =
+                        exerciseImageMap.get(log.exerciseName) || "";
+                      return (
+                        <div
+                          key={log.id}
+                          className="flex-shrink-0 w-32 bg-gray-950/80 backdrop-blur-xl rounded-lg border border-green-900/30 overflow-hidden hover:border-green-600/50 transition-all group relative"
+                        >
+                          <div className="relative aspect-square overflow-hidden">
+                            <img
+                              src={exerciseImage}
+                              alt={log.exerciseName}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              onError={(e) => {
+                                e.currentTarget.src =
+                                  "https://via.placeholder.com/200x200/1a1a1a/4ade80?text=Exercise";
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                            <button
+                              onClick={() => handleDelete(log.id)}
+                              className="absolute top-1.5 right-1.5 p-1 bg-black/70 hover:bg-red-500/90 text-green-700 hover:text-white rounded-lg transition-all z-10"
+                              title="Delete log"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <div className="p-2">
+                            <h4 className="text-green-400 font-semibold text-xs mb-1 line-clamp-2">
+                              {log.exerciseName}
+                            </h4>
+                            <div className="flex items-center justify-between gap-1">
                               <span
-                                className={`inline-block text-xs px-2 py-0.5 rounded-md border ${
+                                className={`inline-block text-[10px] px-1.5 py-0.5 rounded-md border ${
                                   categoryColors[log.category]
                                 } flex-shrink-0`}
                               >
                                 {log.category}
                               </span>
-                            </div>
-                            <div className="text-lg sm:text-xl font-bold text-green-500">
-                              {log.weight} kg
+                              <div className="text-sm font-bold text-green-500">
+                                {log.weight}kg
+                              </div>
                             </div>
                           </div>
-                          <button
-                            onClick={() => handleDelete(log.id)}
-                            className="p-2 text-green-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all flex-shrink-0 mt-1"
-                            title="Delete log"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}

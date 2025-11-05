@@ -3,6 +3,7 @@ export type ExerciseCategory =
   | "Back"
   | "Shoulder"
   | "Triceps"
+  | "Biceps"
   | "Legs";
 
 export interface ExerciseLog {
